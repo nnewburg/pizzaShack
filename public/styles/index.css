@@ -13,13 +13,13 @@ body{
     margin: 0 auto;
     padding: 0;
     width: 100%;
-    height: 60px;
+    height: 10vh;
     background-color: #4d4d4d;
     top: 0;
 }
 
 #main{
 
-  padding-top: 60px;
+  padding-top: 10vh;
   display: block;
 }
