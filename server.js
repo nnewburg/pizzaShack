@@ -11,11 +11,12 @@ const knexConfig  = require("./knexfile");
 const knex        = require("knex")(knexConfig[ENV]);
 const PORT = 8080;
 const bcrypt = require('bcrypt');
+var path = require('path');
 
 
 app.set("view engine", "ejs");
 app.use(bodyParser.urlencoded({extended: true}));
-
+app.use(express.static(path.join(__dirname, '/public')));
 
 app.get("/", (req, res) => {
   return res.render("index");
