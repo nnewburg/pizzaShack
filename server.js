@@ -32,7 +32,8 @@ app.get("/", (req, res) => {
 })
 
 app.get("/login", (req, res) => {
-  res.render("login")
+  let templateVars = {user: req.session.user};
+  res.render("login", templateVars)
 })
 
 app.post("/", (req, res) => {
