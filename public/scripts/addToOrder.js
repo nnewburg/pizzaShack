@@ -1,24 +1,20 @@
-$(document).ready(function () {
-
-$('#main').on('click', '.addItem', function(e) {
-
-    let dummy = $("<div></div>");
-    $(dummy).text("hello world");
-    $("#myOrder").append(dummy);
-  });
+$(document).ready(function() {
+$(".addItem").click(function(e) {
+    console.log("jquery works")
 
     $.ajax({
-      method: 'PUT',
-      url: `/`,
-
-      success: function(result){
-        console.log('post')
-      },
-      error: function(err){
-        console.log("there was an error updating rating to db");
-      }
-    })
-
-
-  });
-
+        type: "POST",
+        url: "/addItem",
+        data: {
+            id: $(this).val(), // < note use of 'this' here
+            access_token: $("#access_token").val()
+        },
+        success: function(result) {
+            alert('ok');
+        },
+        error: function(result) {
+            alert('error');
+        }
+    });
+});
+});

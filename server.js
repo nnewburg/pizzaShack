@@ -24,6 +24,11 @@ app.use(cookieSession({
   maxAge: 24 * 60 * 60 * 1000
 }));
 
+// Seperated Routes for each Order
+const orderRoutes = require("./routes/orders");
+
+// Mount all order routes
+app.use("/api/orders", orderRoutes(knex));
 
 app.get("/", (req, res) => {
   console.log(req.session.user)
@@ -48,6 +53,13 @@ app.post("/", (req, res) => {
 app.post("/logout", (req, res) => {
   req.session.user = ""
   res.redirect("/")
+})
+
+app.post("/addItem", (req, res) => {
+  console.log("route works")
+  knex("orders").insert({description: 'Classic Pizza', totalCost: 10, user_id: req.session.user.id}).then(result =>{
+    res.redirect("/")
+  })
 })
 
 app.listen(PORT, () => {
