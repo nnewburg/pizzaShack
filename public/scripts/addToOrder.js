@@ -1,6 +1,7 @@
-$(document).ready(function() {
-$(".addItem").click(function(e) {
-    console.log("jquery works")
+ $(function( $ ){
+
+$(document).on("click", '.addItem', function () {
+    console.log("works")
 
     $.ajax({
         type: "POST",
@@ -12,9 +13,34 @@ $(".addItem").click(function(e) {
         success: function(result) {
             alert('ok');
         },
-        error: function(result) {
+        fail: function(result) {
             alert('error');
         }
     });
+
+     $.ajax({
+    method: "GET",
+    url: "/api/orders"
+  }).done((resources) => {
+    console.log(resources)
+
+      renderOrders(createOrder(resources[resources.length-1]))
+
+  });
+
+
+
+
 });
-});
+})
+
+ function createOrder(resource){
+
+    let dummy = $("<div></div>");
+    $(dummy).text("hello world");
+    return dummy
+  };
+
+function renderOrders(data) {
+    data.appendTo($('#myOrder'));
+}
