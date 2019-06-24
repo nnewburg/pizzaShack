@@ -57,9 +57,21 @@ app.post("/logout", (req, res) => {
 
 app.post("/addItem", (req, res) => {
   console.log("route works")
-  knex("orders").insert({description: 'Classic Pizza', totalCost: 10, user_id: req.session.user.id}).then(result =>{
-    res.redirect("/")
+
+  knex("orders").where({user_id: req.session.user.id, currentOrder: true}).then(result =>{
+    console.log(!result[0]);
+    if(!result[0]){
+      console.log("add Order route gucci")
+      knex("orders").insert({user_id: req.session.user.id, currentOrder: true, orderCompleted: false}).then(result => {
+        res.redirect("/")
+      })
+    }
+
   })
+ // .where({user_id: req.session.user.id, currentOrder: true})
+ // .insert({itemsOrdered: 'Classic Pizza', user_id: req.session.user.id}).then(result =>{
+
+ // })
 })
 
 app.listen(PORT, () => {
