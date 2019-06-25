@@ -1,13 +1,15 @@
+
+
  $(function( $ ){
 
-$(document).on("click", '.addItem', function () {
-    console.log("works")
+$(document).on("click", '.addItem', function (e) {
+    console.log(e.target.id)
 
     $.ajax({
         type: "POST",
         url: "/addItem",
         data: {
-            id: $(this).val(), // < note use of 'this' here
+            id: e.target.id, // < note use of 'this' here
             access_token: $("#access_token").val()
         },
         success: function(result) {
@@ -23,8 +25,9 @@ $(document).on("click", '.addItem', function () {
     url: "/api/orders"
   }).done((resources) => {
     console.log(resources)
-
-      renderOrders(createOrder(resources[resources.length-1]))
+    let data = resources[0].itemsOrdered
+    let crop = data.split(",")
+      renderOrders(createOrder(crop[crop.length-1]))
 
   });
 
@@ -37,7 +40,7 @@ $(document).on("click", '.addItem', function () {
  function createOrder(resource){
 
     let dummy = $("<div></div>");
-    $(dummy).text("hello world");
+    $(dummy).text(resource);
     return dummy
   };
 

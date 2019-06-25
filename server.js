@@ -56,16 +56,32 @@ app.post("/logout", (req, res) => {
 })
 
 app.post("/addItem", (req, res) => {
-  console.log("route works")
+console.log(req.body.id)
 
   knex("orders").where({user_id: req.session.user.id, currentOrder: true}).then(result =>{
     console.log(!result[0]);
+
     if(!result[0]){
       console.log("add Order route gucci")
       knex("orders").insert({user_id: req.session.user.id, currentOrder: true, orderCompleted: false}).then(result => {
-        res.redirect("/")
+        knex("orders").where({currentOrder:true}).update({itemsOrdered:req.body.id}).then(result => {
+          res.redirect("/")
+        })
       })
-    }
+    } else {
+      console.log("rutherford")
+      knex.select('itemsOrdered').from("orders").where({currentOrder: true}).then(result => {
+        if(result[0].itemsOrdered){
+        knex("orders").where({currentOrder:true}).update({itemsOrdered:result[0].itemsOrdered + ',' + req.body.id}).then(result => {
+          res.redirect("/")
+          })
+        }else
+        knex("orders").where({currentOrder:true}).update({itemsOrdered:req.body.id}).then(result => {
+          res.redirect("/")
+        })
+      })
+      }
+
 
   })
  // .where({user_id: req.session.user.id, currentOrder: true})

@@ -1,10 +1,14 @@
+
+
  $(function( $ ){
   $.ajax({
     method: "GET",
     url: "/api/orders"
   }).done((resources) => {
-    console.log("mount works")
-    for(resource of resources) {
+    console.log(resources)
+    let data = resources[0].itemsOrdered
+    let crop = data.split(",")
+    for(resource of crop) {
       renderOrders(createOrder(resource))
     }
   });
@@ -13,7 +17,7 @@
 function createOrder(resource){
 
     let dummy = $("<div></div>");
-    $(dummy).text("hello world");
+    $(dummy).text(resource);
     return dummy
   };
 
