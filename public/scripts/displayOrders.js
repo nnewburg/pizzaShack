@@ -6,11 +6,13 @@
     url: "/api/orders"
   }).done((resources) => {
     console.log(resources)
+    if(resources[0]){
     let data = resources[0].itemsOrdered
     let crop = data.split(",")
     for(resource of crop) {
       renderOrders(createOrder(resource))
     }
+  }
   });
 
 

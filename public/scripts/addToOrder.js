@@ -3,7 +3,7 @@
  $(function( $ ){
 
 $(document).on("click", '.addItem', function (e) {
-    console.log(e.target.id)
+    // console.log(e.target.id)
 
     $.ajax({
         type: "POST",
@@ -13,23 +13,24 @@ $(document).on("click", '.addItem', function (e) {
             access_token: $("#access_token").val()
         },
         success: function(result) {
-            alert('ok');
-        },
-        fail: function(result) {
-            alert('error');
-        }
-    });
-
-     $.ajax({
+                $.ajax({
     method: "GET",
     url: "/api/orders"
   }).done((resources) => {
+    console.log("shoal")
     console.log(resources)
     let data = resources[0].itemsOrdered
     let crop = data.split(",")
       renderOrders(createOrder(crop[crop.length-1]))
 
   });
+        },
+        fail: function(result) {
+            alert('error');
+        }
+    });
+
+
 
 
 
