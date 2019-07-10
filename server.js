@@ -26,9 +26,13 @@ app.use(cookieSession({
 
 // Seperated Routes for each Order
 const orderRoutes = require("./routes/orders");
+const itemRoutes = require("./routes/items");
 
 // Mount all order routes
 app.use("/api/orders", orderRoutes(knex));
+
+// Mount all order routes
+app.use("/api/items", itemRoutes(knex));
 
 app.get("/", (req, res) => {
   console.log(req.session.user)

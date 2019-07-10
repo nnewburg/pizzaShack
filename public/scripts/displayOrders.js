@@ -16,9 +16,10 @@
   });
 
 
-function createOrder(resource){
+ function createOrder(resource){
 
     let dummy = $("<div></div>");
+    $(dummy).addClass("cartItem");
     $(dummy).text(resource);
     return dummy
   };

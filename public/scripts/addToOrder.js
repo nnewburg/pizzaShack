@@ -14,16 +14,38 @@ $(document).on("click", '.addItem', function (e) {
         },
         success: function(result) {
                 $.ajax({
-    method: "GET",
-    url: "/api/orders"
-  }).done((resources) => {
+                     method: "GET",
+                     url: "/api/orders"
+                }).done((resources) => {
+    $.ajax({
+       method: "GET",
+        url: "/api/items"
+    }).done ((items) => {
     console.log("shoal")
-    console.log(resources)
+
+    console.log(items)
+
+    let price = 0;
     let data = resources[0].itemsOrdered
     let crop = data.split(",")
-      renderOrders(createOrder(crop[crop.length-1]))
 
-  });
+    console.log(crop[crop.length-1])
+    console.log(items[0].description)
+    console.log(items[0].price)
+
+    for(let i = 0; i < items.length; i++) {
+        console.log("loop works")
+        if(items[i].description == crop[crop.length-1]){
+           price = items[i].price
+        }
+        console.log("price declared")
+    }
+
+    console.log('price actually', price)
+
+      renderOrders(createOrder(crop[crop.length-1], price))
+  })
+});
         },
         fail: function(result) {
             alert('error');
@@ -38,10 +60,14 @@ $(document).on("click", '.addItem', function (e) {
 });
 })
 
- function createOrder(resource){
+ function createOrder(resource, price){
 
     let dummy = $("<div></div>");
+    $(dummy).addClass("cartItem");
     $(dummy).text(resource);
+    let numOfPrice = $("<p></p>")
+    $(numOfPrice).text(price);
+    $(dummy).append(numOfPrice);
     return dummy
   };
 
