@@ -44,6 +44,7 @@ $(document).on("click", '.addItem', function (e) {
     console.log('price actually', price)
 
       renderOrders(createOrder(crop[crop.length-1], price))
+      incrementTotalCost(price)
   })
 });
         },
@@ -66,11 +67,18 @@ $(document).on("click", '.addItem', function (e) {
     $(dummy).addClass("cartItem");
     $(dummy).text(resource);
     let numOfPrice = $("<p></p>")
-    $(numOfPrice).text(price);
+    $(numOfPrice).text(`Cost: $ ${price}`);
     $(dummy).append(numOfPrice);
     return dummy
   };
 
 function renderOrders(data) {
-    data.appendTo($('#myOrder'));
+    data.appendTo($('#cartItems'));
+}
+
+function incrementTotalCost (data){
+    let test = $('#totalCost').text()
+    let result= parseInt(test.replace(/\D/g, ''));
+
+    $('#totalCost').text(`Total Cost: $ ${result+data}`)
 }

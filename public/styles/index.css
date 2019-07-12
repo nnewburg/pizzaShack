@@ -51,6 +51,7 @@ body{
 }
 
 #myOrder{
+
     height: fit-content;
     overflow: hidden;
     width: 25vw;
@@ -60,7 +61,10 @@ body{
 }
 
 .cartItem{
-    width: 100%;
-    height: 8vh;
+    margin-right: 0.5rem;
+    margin-left: 0.5rem;
+    margin-bottom: 0.5rem;
+    width: 90%;
+    height: 12vh;
     border: 1px solid red;
 }
