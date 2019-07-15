@@ -68,3 +68,8 @@ body{
     height: 12vh;
     border: 1px solid red;
 }
+
+.itemInputBox{
+    height: 35%;
+    width: 35%;
+}
