@@ -53,14 +53,19 @@ function createOrder(resource,amount,price){
     $(dummy).text(resource);
     let quantity = $("<input></input>")
     $(quantity).attr({
+      id: resource + "Cart",
       size: "10",
       class: "itemInputBox",
       type: "number",
       min: "0",
       max: "10",
-      value: amount
+      value: amount,
+      alt: amount
+
     })
+
     let numOfPrice = $("<p></p>")
+    $(numOfPrice).attr({id: resource+"Price"})
     $(numOfPrice).text(`Cost: $ ${price * amount}`);
     $(dummy).append(quantity)
     $(dummy).append(numOfPrice);

@@ -28,23 +28,34 @@ $(document).on("click", '.addItem', function (e) {
     let price = 0;
     let data = resources[0].itemsOrdered
     let crop = data.split(",")
-
-    console.log(crop[crop.length-1])
-    console.log(items[0].description)
-    console.log(items[0].price)
+    let flagAdd = true;
+    let flagLoop = true;
 
     for(let i = 0; i < items.length; i++) {
         console.log("loop works")
         if(items[i].description == crop[crop.length-1]){
            price = items[i].price
         }
-        console.log("price declared")
     }
 
-    console.log('price actually', price)
+    while(flagLoop){
+    for (let i = 0; i < crop.length-1; i++){
+        if(crop[i] == crop[crop.length-1]){
+            addItem(crop[i], price)
+            incrementTotalCost(price)
+            flagAdd = false;
+            flagLoop = false;
+            return
+        }
+    }
+        flagLoop = false;
+    }
 
-      renderOrders(createOrder(crop[crop.length-1], price))
+    if(flagAdd){
+
+      renderOrders(createOrder(crop[crop.length-1],1, price))
       incrementTotalCost(price)
+  }
   })
 });
         },
@@ -61,16 +72,37 @@ $(document).on("click", '.addItem', function (e) {
 });
 })
 
- function createOrder(resource, price){
+ function addItem(resource,price){
+    let value = parseInt($(`#${resource}Cart`).val())
+    $(`#${resource}Cart`).val(parseInt(value+1))
+    let amount = value + 1
+    $(`#${resource}Price`).text(`Cost: $ ${price * amount}`);
+ }
+
+function createOrder(resource,amount,price){
 
     let dummy = $("<div></div>");
     $(dummy).addClass("cartItem");
     $(dummy).text(resource);
+    let quantity = $("<input></input>")
+    $(quantity).attr({
+      id: resource + "Cart",
+      size: "10",
+      class: "itemInputBox",
+      type: "number",
+      min: "0",
+      max: "10",
+      value: amount
+    })
+    $(quantity).attr("mog", "amount")
     let numOfPrice = $("<p></p>")
-    $(numOfPrice).text(`Cost: $ ${price}`);
+    $(numOfPrice).attr({id: resource+"Price"})
+    $(numOfPrice).text(`Cost: $ ${price * amount}`);
+    $(dummy).append(quantity)
     $(dummy).append(numOfPrice);
     return dummy
   };
+
 
 function renderOrders(data) {
     data.appendTo($('#cartItems'));
@@ -78,7 +110,7 @@ function renderOrders(data) {
 
 function incrementTotalCost (data){
     let test = $('#totalCost').text()
-    let result= parseInt(test.replace(/\D/g, ''));
+    let result = parseInt(test.replace(/\D/g, ''));
 
     $('#totalCost').text(`Total Cost: $ ${result+data}`)
 }

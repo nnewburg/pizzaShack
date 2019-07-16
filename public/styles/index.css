@@ -52,12 +52,14 @@ body{
 
 #myOrder{
 
+    position: fixed;
     height: fit-content;
     overflow: hidden;
     width: 25vw;
     border: 5px solid black;
     margin-right: 5%;
     margin-top: 10%;
+    margin-left: 73%;
 }
 
 .cartItem{
@@ -70,6 +72,7 @@ body{
 }
 
 .itemInputBox{
+    margin-left: 1em;
     height: 35%;
-    width: 35%;
+    width: 30%;
 }
