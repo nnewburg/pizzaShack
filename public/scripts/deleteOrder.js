@@ -15,14 +15,29 @@ $(document).on("click", '.removeItem', function (e) {
             url: "/api/items"
         }).done ((items) => {
 
-console.log("Birchwood" + e.target.id)
-console.log(items[0])
+console.log("Birchwood" + items)
 
+
+
+let item = e.target.id.slice(6,e.target.id.length)
 let parse = e.target.id.slice(0,6)
 
-let price = $(`#${e.target.id}`).siblings(`id.${parse}+price`)
+let price = 0;
+console.log("zoidberg" + items[0].price)
 
-console.log(price)
+for(product of items){
+        if(item == product.description){
+          price = product.price;
+        }
+      }
+
+
+console.log("derpity" + price)
+
+
+let quantity = $(`#${item}Cart`).val()
+
+decrementTotalCost((quantity*price))
 
 let parent = $(`#${e.target.id}`).parent()
 $(parent).remove();

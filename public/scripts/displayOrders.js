@@ -48,7 +48,7 @@
 
 function createOrder(resource,amount,price){
 
-  if(resource.length > 2){
+  if(resource.length > 0){
     let dummy = $("<div></div>");
     $(dummy).addClass("cartItem");
     $(dummy).text(resource);
@@ -58,7 +58,7 @@ function createOrder(resource,amount,price){
       size: "10",
       class: "itemInputBox",
       type: "number",
-      min: "0",
+      min: "1",
       max: "10",
       value: amount,
       alt: amount
@@ -80,7 +80,9 @@ function createOrder(resource,amount,price){
 
 
 function renderOrders(data) {
+  if(data){
     data.appendTo($('#cartItems'));
+  }
 }
 
 function calculateTotalPrice(price){

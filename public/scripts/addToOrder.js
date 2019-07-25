@@ -90,7 +90,7 @@ function createOrder(resource,amount,price){
       size: "10",
       class: "itemInputBox",
       type: "number",
-      min: "0",
+      min: "1",
       max: "10",
       value: amount
     })
