@@ -88,11 +88,23 @@ console.log(req.body.id)
 
 
   })
- // .where({user_id: req.session.user.id, currentOrder: true})
- // .insert({itemsOrdered: 'Classic Pizza', user_id: req.session.user.id}).then(result =>{
-
- // })
 })
+
+app.post("/removeItem", (req, res) => {
+
+   knex("orders").where({user_id: req.session.user.id, currentOrder: true}).then(result => {
+      let parse = req.body.id.slice(6, req.body.id.length)
+      knex("orders").where({user_id: req.session.user.id, currentOrder: true}).then(result => {
+        let matrix = result[0].itemsOrdered.split(',')
+        let removed = matrix.filter(word => word !== parse)
+        removed = removed.join(",")
+        knex("orders").where({currentOrder:true}).update({itemsOrdered:removed}).then(result => {
+      })
+    })
+    })
+      res.redirect("/")
+    })
+
 
 app.listen(PORT, () => {
   console.log(`Example app listening on port ${PORT}!`);

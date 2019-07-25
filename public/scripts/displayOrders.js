@@ -48,6 +48,7 @@
 
 function createOrder(resource,amount,price){
 
+  if(resource.length > 2){
     let dummy = $("<div></div>");
     $(dummy).addClass("cartItem");
     $(dummy).text(resource);
@@ -65,11 +66,16 @@ function createOrder(resource,amount,price){
     })
 
     let numOfPrice = $("<p></p>")
-    $(numOfPrice).attr({id: resource+"Price"})
+    $(numOfPrice).attr({id: resource+"Price", class:"itemPrice"})
     $(numOfPrice).text(`Cost: $ ${price * amount}`);
     $(dummy).append(quantity)
     $(dummy).append(numOfPrice);
+    let deleteOrder = $("<a></a>")
+    $(deleteOrder).attr({id: "remove" + resource, href: "#", class: "removeItem"})
+    $(deleteOrder).text("Remove Item")
+    $(dummy).append(deleteOrder);
     return dummy
+  }
   };
 
 

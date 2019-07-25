@@ -65,9 +65,8 @@ body{
 .cartItem{
     margin-right: 0.5rem;
     margin-left: 0.5rem;
-    margin-bottom: 0.5rem;
     width: 90%;
-    height: 12vh;
+    height: 14vh;
     border: 1px solid red;
 }
 
@@ -75,4 +74,8 @@ body{
     margin-left: 1em;
     height: 35%;
     width: 30%;
+}
+
+.itemPrice{
+    margin-bottom: 0px;
 }

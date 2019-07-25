@@ -96,12 +96,17 @@ function createOrder(resource,amount,price){
     })
     $(quantity).attr("mog", "amount")
     let numOfPrice = $("<p></p>")
-    $(numOfPrice).attr({id: resource+"Price"})
+    $(numOfPrice).attr({id: resource+"Price", class:"itemPrice"})
     $(numOfPrice).text(`Cost: $ ${price * amount}`);
     $(dummy).append(quantity)
     $(dummy).append(numOfPrice);
+     let deleteOrder = $("<a></a>")
+    $(deleteOrder).attr({id: "remove" + resource, href: "#", class: "removeItem"})
+    $(deleteOrder).text("Remove Item")
+    $(dummy).append(deleteOrder);
     return dummy
   };
+
 
 
 function renderOrders(data) {
