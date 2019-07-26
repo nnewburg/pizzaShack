@@ -50,6 +50,20 @@ body{
     padding-right: 2rem;
 }
 
+#rightContainer{
+    display: flex;
+    flex-direction: row;
+}
+
+#rightContainer p {
+    margin-top: 1rem;
+}
+
+#logo{
+    font-family: 'Fascinate';
+    font-size: 2.5rem;
+}
+
 #myOrder{
 
     position: fixed;

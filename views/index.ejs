@@ -4,6 +4,7 @@
   <title></title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
   <link rel="stylesheet" type="text/css" href='/styles/index.css'>
+  <link href="https://fonts.googleapis.com/css?family=Fascinate&display=swap" rel="stylesheet">
 <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
   <script type="text/javascript" src="/scripts/displayOrders.js"></script>
   <script type="text/javascript" src="/scripts/addToOrder.js"></script>
@@ -14,9 +15,9 @@
 
   <div id="nav">
     <p id="language">English</p>
-    <p id="logo">Pizza Shack</p>
+    <p id="logo">Pizza Shack <img style="margin-bottom: 2rem;"width="60" height="60" src="https://cdn0.iconfinder.com/data/icons/restaurant-53/64/Food-junk-pizza-fast_food-512.png"/></p>
       <% include ./partials/_header.ejs %>
-    <a id="login" href="/login">Sign In</a>
+    <!-- <a id="login" href="/login">Sign In</a> -->
   </div>
 
 
@@ -25,26 +26,35 @@
     <img class="card-img-top" src="https://vmcdn.ca/f/files/tbnewswatch/images/business/business-directory-photos/pizza-hut-thunder-bay/pizza-hut-pan-pizza.jpg;w=630" alt="Card image cap">
    <div class="card-body">
       <h5 class="card-title">Pepperoni Pizza</h5>
-      <p class="card-text">Choose from classic options like your grandpa loved</p>
-      <a href="#" id="Pepperoni" class="btn btn-primary addItem">Go somewhere</a>
+      <p class="card-text">Pepperoni Pizza the classic of classics, mmmmm</p>
+      <a href="#" id="Pepperoni" class="btn btn-primary addItem">Order</a>
     </div>
   </div>
   <div class="card" >
-    <img class="card-img-top" src="https://vmcdn.ca/f/files/tbnewswatch/images/business/business-directory-photos/pizza-hut-thunder-bay/pizza-hut-pan-pizza.jpg;w=630" alt="Card image cap">
+    <img class="card-img-top" src="https://cdn.shopify.com/s/files/1/1718/7795/articles/Pizza_-_Veggie_Supreme_1024x512_crop_center.jpg?v=1529420457;w=630" alt="Card image cap">
     <div class="card-body">
       <h5 class="card-title">Vegetarian Pizza</h5>
-      <p class="card-text">Choose from classic options like your grandpa loved</p>
-      <a href="#" id="Vegetarian" class="btn btn-primary addItem">Go somewhere</a>
+      <p class="card-text">Topped with mushrooms, peppers, olives, and spinach</p>
+      <a href="#" id="Vegetarian" class="btn btn-primary addItem">Order</a>
     </div>
   </div>
   <div class="card" >
     <img class="card-img-top" src="https://assets.epicurious.com/photos/5761c748ff66dde1456dfec0/2:1/w_1260%2Ch_630/crispy-baked-chicken-wings.jpg" alt="Card image cap">
     <div class="card-body">
       <h5 class="card-title">Wings</h5>
-      <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-      <a href="#" id="Wings" class="btn btn-primary addItem">Go somewhere</a>
+      <p class="card-text">Choose between honey garlic, hot, or salt and pepper</p>
+      <a href="#" id="Wings" class="btn btn-primary addItem">Order</a>
     </div>
   </div>
+   <div class="card" >
+    <img class="card-img-top" src="https://hips.hearstapps.com/del.h-cdn.co/assets/15/45/1446653066-delish-thanksgiving-breadstick-toppings.jpg" alt="Card image cap">
+    <div class="card-body">
+      <h5 class="card-title">Bread Sticks</h5>
+      <p class="card-text">Choose between cheesy, extra cheesy, or ridiculously cheesy</p>
+      <a href="#" id="Bread" class="btn btn-primary addItem">Order</a>
+    </div>
+  </div>
+
 
 
 </div>

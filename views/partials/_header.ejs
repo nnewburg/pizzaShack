@@ -1,9 +1,12 @@
 <% if (user){ %>
-    <h3>Logged In As: <%= user.name %>!</h3>
+  <div id="rightContainer">
+    <p>Logged In As: <%= user.name %>!</p>
     <form method="POST" action="/logout">
       <button style="margin:10px;" type="submit" class="btn btn-primary" style= "margin: 0px 10px;">logout</button>
     </form>
+    </div>
 <% } else { %>
+<button id="login" style="margin:10px;" type="submit" class="btn btn-info" onclick="window.location.href = 'login';">Sign In</button>
 
 <% } %>
 
