@@ -53,8 +53,9 @@ $(document).on("click", '.addItem', function (e) {
 
     if(flagAdd){
 
-      renderOrders(createOrder(crop[crop.length-1],1, price))
-      incrementTotalCost(price)
+      renderOrders(createOrder(crop[crop.length-1],1, price,price))
+      console.log("NAN check" + price)
+      //incrementTotalCost(price)
   }
   })
 });
@@ -79,7 +80,7 @@ $(document).on("click", '.addItem', function (e) {
     $(`#${resource}Price`).text(`Cost: $ ${price * amount}`);
  }
 
-function createOrder(resource,amount,price){
+function createOrder(resource,amount,price,data){
 
     let dummy = $("<div></div>");
     $(dummy).addClass("cartItem");
@@ -104,6 +105,16 @@ function createOrder(resource,amount,price){
     $(deleteOrder).attr({id: "remove" + resource, href: "#", class: "removeItem"})
     $(deleteOrder).text("Remove Item")
     $(dummy).append(deleteOrder);
+    let test = $('#totalCost').text()
+    let result = parseInt(test.replace(/\D/g, ''));
+
+    console.log("Sara" + result)
+
+    if(result){
+        $('#totalCost').text(`Total Cost: $ ${result+data}`)
+    } else {
+        $('#totalCost').text(`Total Cost: $ ${data}`)
+    }
     return dummy
   };
 
@@ -117,5 +128,6 @@ function incrementTotalCost (data){
     let test = $('#totalCost').text()
     let result = parseInt(test.replace(/\D/g, ''));
 
+    console.log("Sara" + result)
     $('#totalCost').text(`Total Cost: $ ${result+data}`)
 }

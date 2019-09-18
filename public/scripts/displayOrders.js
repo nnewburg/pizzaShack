@@ -9,7 +9,7 @@
            method: "GET",
             url: "/api/items"
         }).done ((items) => {
-    console.log(resources)
+    console.log("check" + resources)
     if(resources[0]){
     let price = 0;
     let totalPrice = 0;
