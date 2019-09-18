@@ -31,6 +31,20 @@ body{
   width: 60%;
 }
 
+#itemsOrdCheckout{
+
+
+  justify-content: space-around;
+  border: 2px black solid;
+  margin: 10%;
+  width: 60%;
+}
+
+.orderPrice{
+    display: inline;
+     margin-left: 4rem;
+}
+
 .card{
 
     width: 27vw;
@@ -83,6 +97,11 @@ body{
     height: 14vh;
     border: 1px solid red;
 }
+
+.orderItem{
+    display: inline;
+}
+
 
 .itemInputBox{
     margin-left: 1em;

@@ -45,6 +45,11 @@ app.get("/login", (req, res) => {
   res.render("login", templateVars)
 })
 
+app.get("/checkOut", (req, res) => {
+  let templateVars = {user: req.session.user};
+  res.render("checkOut", templateVars)
+})
+
 app.post("/", (req, res) => {
   knex("users").insert({email: req.body.email, password: req.body.password, name: req.body.name}).then(result => {
      knex("users").where({email: req.body.email}).then(result => {
