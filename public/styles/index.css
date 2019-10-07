@@ -5,6 +5,12 @@ body{
     flex-direction: row;
 }
 
+.orderDiv{
+    border: 2px black solid;
+    background-color: red;
+    height: 3em;
+}
+
 
 
 #nav{
@@ -100,6 +106,7 @@ body{
 
 .orderItem{
     display: inline;
+     margin-left: 4rem;
 }
 
 
