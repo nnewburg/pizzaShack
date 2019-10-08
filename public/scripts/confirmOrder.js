@@ -21,6 +21,7 @@
         }
     })
 
+    let totalCost = 0
 
     for(let prop in quantityObj){
       if(Object.prototype.hasOwnProperty.call(quantityObj, prop)){
@@ -32,31 +33,31 @@
               console.log(price)
             }
         }
+
+        totalCost += (price * quantityObj[prop])
+
         renderOrders(displayOrder(prop, price, quantityObj[prop]));
       }
     }
 
-    // crop.forEach(function(element) {
-    //   let price = 0;
-    //   for(let i = 0; i < items.length; i++) {
-    //         if(items[i].description == element ){
-    //           console.log("if works")
-    //           price = items[i].price
-    //           console.log(price)
-    //         }
-    //   }
-
-    //   renderOrders(displayOrder(element, price));
-    // });
-
+   totalItemsCost(totalCost)
 
     })
   })
 });
 
+ function totalItemsCost(arg){
+  let totalCostEle = $("<p></p>")
+  $(totalCostEle).text("Total: $" + arg)
+  $(totalCostEle).css("float", "right")
+  $(totalCostEle).css("marginRight", "4rem")
+  $(totalCostEle).appendTo($('#itemsOrdCheckout'));
+ }
+
+
  function renderOrders(data) {
-    data.appendTo($('#itemsOrdCheckout'));
-}
+    data.appendTo($('#orderItemsContainer'));
+  }
 
   function displayOrder(resource,cost,quantity){
 
@@ -67,17 +68,18 @@
     $(name).addClass("orderItem");
     $(name).text(resource+ "  ")
     let price = $("<p></p>")
-    $(price).addClass("orderItem orderPrice");
-    $(price).text("cost: $" + cost)
+    // $(price).addClass("orderItem orderPrice");
+    // $(price).text("cost: $" + cost)
     let quantity1 = $("<p></p>");
-    $(quantity1).text("Quantity:     " + quantity)
+    $(quantity1).text(" x " + quantity)
     $(quantity1).addClass("orderItem");
     let itemTotal = $("<p></p>");
-    $(itemTotal).addClass("orderItem");
-    $(itemTotal).text(cost*quantity);
+    $(itemTotal).addClass("orderItemCost");
+    $(itemTotal).text("$" + cost*quantity);
     $(dummy).append(name)
-    $(dummy).append(price)
     $(dummy).append(quantity1)
+    // $(dummy).append(price)
+
     $(dummy).append(itemTotal)
     // let quantity = $("<input></input>")
     // $(quantity).attr({

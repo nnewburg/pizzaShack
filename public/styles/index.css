@@ -3,11 +3,14 @@ body{
     padding: 0;
     display: flex;
     flex-direction: row;
+    background-color: #f6f6f6;
 }
 
+
 .orderDiv{
+    position: relative;
     border: 2px black solid;
-    background-color: red;
+    background-color: white;
     height: 3em;
 }
 
@@ -26,7 +29,42 @@ body{
     top: 0;
     z-index: 999;
     vertical-align: middle;
+    box-shadow: 5px 10px 8px 10px #888888
 }
+
+#botNav{
+     justify-content: center;
+    position: fixed;
+    display: flex;
+    color: white;
+    margin: 0 auto;
+    padding: 0;
+    width: 100%;
+    height: 10vh;
+    background-color: gray;
+    bottom: 0;
+    z-index: 999;
+    vertical-align: middle;
+    box-shadow: 5px 10px 8px 10px #888888
+}
+
+#botNav ul{
+
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+}
+
+#botNav li {
+     display: block;
+    text-align: center;
+    float: left;
+    margin-left: 1rem;
+    margin-right: 1rem;
+}
+
+
 
 #main{
   display: flex;
@@ -35,15 +73,22 @@ body{
   border: 2px black solid;
   margin: 10%;
   width: 60%;
+  background-color: #f6f6f6;
+  box-shadow: 5px 10px 8px 10px #888888;
+  font-family: 'Mansalva', cursive;
+  font-size: 20px;
 }
 
 #itemsOrdCheckout{
 
-
+  background-image: linear-gradient(to top right, yellow, red);
+  border-radius: 8%;
+  padding: 0.3rem;
   justify-content: space-around;
   border: 2px black solid;
   margin: 10%;
-  width: 60%;
+  width: 30%;
+  box-shadow: 5px 10px 8px 10px #888888
 }
 
 .orderPrice{
@@ -88,27 +133,42 @@ body{
 
     position: fixed;
     height: fit-content;
+    padding: 0.4rem;
     overflow: hidden;
     width: 25vw;
     border: 5px solid black;
     margin-right: 5%;
+    background-color: #f6f6f6;
     margin-top: 10%;
     margin-left: 73%;
+    box-shadow: 5px 10px 8px 10px #888888
 }
 
 .cartItem{
+    padding: 0.3rem;
     margin-right: 0.5rem;
     margin-left: 0.5rem;
     width: 90%;
     height: 14vh;
-    border: 1px solid red;
+
 }
 
 .orderItem{
     display: inline;
-     margin-left: 4rem;
 }
 
+.orderItemCost{
+    position: absolute;
+    right: 0;
+    float: right;
+}
+
+
+
+#orderItemsContainer{
+        width: 80%;
+    margin-left: 10%;
+}
 
 .itemInputBox{
     margin-left: 1em;
