@@ -48,6 +48,7 @@
 
  function totalItemsCost(arg){
   let totalCostEle = $("<p></p>")
+  $('#jim').val(arg)
   $(totalCostEle).text("Total: $" + arg)
   $(totalCostEle).css("float", "right")
   $(totalCostEle).css("marginRight", "4rem")

@@ -13,6 +13,9 @@ const PORT = 8080;
 const bcrypt = require('bcrypt');
 var path = require('path');
 
+const accountSid = process.env.TWILIO_ACCOUNT_SID;
+const authToken = process.env.TWILIO_AUTH_TOKEN;
+const twilioClient = require('twilio')(accountSid, authToken);
 
 app.set("view engine", "ejs");
 app.use(bodyParser.urlencoded({extended: true}));
@@ -33,6 +36,19 @@ app.use("/api/orders", orderRoutes(knex));
 
 // Mount all order routes
 app.use("/api/items", itemRoutes(knex));
+
+app.post("/confirmOrder", (req, res) => {
+  console.log(req.body.totCost)
+  knex("orders").where({user_id: req.session.user.id, currentOrder: true}).update({totalCost: req.body.totCost, currentOrder: false, orderCompleted:true}).then(result =>{
+    // twilioClient.messages.create({
+    //   to: '+17783844459',
+    //   from: '+12563673421',
+    //   body: 'Your order has been placed'
+    // }).then(result => {
+    res.redirect("/")
+    // })
+  })
+})
 
 app.get("/", (req, res) => {
   console.log(req.session.user)
@@ -60,8 +76,10 @@ app.post("/", (req, res) => {
 })
 
 app.post("/logout", (req, res) => {
-  req.session.user = ""
-  res.redirect("/")
+  knex("orders").where({user_id: req.session.user.id, currentOrder: true}).update({currentOrder: false}).then(result =>{
+    req.session.user = ""
+    res.redirect("/")
+  })
 })
 
 app.post("/addItem", (req, res) => {
