@@ -6,40 +6,22 @@
 
   <link rel="stylesheet" type="text/css" href='/styles/index.css'>
   <link href="https://fonts.googleapis.com/css?family=Fascinate&display=swap" rel="stylesheet">
+  <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+    <script type="text/javascript" src="/scripts/adminDisplay.js"></script>
 </head>
 <body>
 
-  <div id="nav" style="display:flex; justify-content: center;">
+  <div id="nav">
 
+       <p id="language">English</p>
 
         <p id="logo">Pizza Shack <img style="margin-bottom: 2rem;"width="60" height="60" src="https://cdn0.iconfinder.com/data/icons/restaurant-53/64/Food-junk-pizza-fast_food-512.png"/></p>
+         <% include ./partials/_header.ejs %>
        </div>
-<div id="loginContainer">
-  <form class="formMain" action="/login" method="POST">
-    <div class= "formDiv">
-      <span> Email </span>
-      <input class="formInp" type="text" name="email">
-    </div>
 
-    <div class= "formDiv">
-      <span> Name </span>
-      <input class="formInp" type="text" name="name">
-    </div>
-    <div class= "formDiv">
-      <span> Password </span>
-      <input class="formInp" type="password" name="password">
-    </div>
-    <div class= "formDiv">
-      <span>Phone Number</span>
-      <input class="formInp" type="tel" name="phone">
-    </div>
-    <div class= "formDiv">
-      <span>Admin Password</span>
-      <input class="formInp" type="text" name="adminPword">
-    </div>
-    <input type="submit" name="submit">
 
-  </form>
+<div id="adminMain">
+
 </div>
 
 

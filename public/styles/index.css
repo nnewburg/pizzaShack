@@ -79,6 +79,50 @@ body{
   font-size: 20px;
 }
 
+#adminMain{
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  border: 2px black solid;
+  margin: 10%;
+  width: 60%;
+  background-color: #f6f6f6;
+  box-shadow: 5px 10px 8px 10px #888888;
+  font-family: 'Mansalva', cursive;
+  font-size: 20px;
+}
+
+#loginContainer{
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  border: 2px black solid;
+  margin: 10%;
+  width: 38%;
+  background-color: #f6f6f6;
+  box-shadow: 5px 10px 8px 10px #888888;
+  font-family: 'Mansalva', cursive;
+  font-size: 20px;
+}
+
+.formMain{
+  padding: 1rem;
+  display: flex;
+  flex-wrap: wrap;
+  width: 100%;
+  font-family: 'Mansalva', cursive;
+  font-size: 20px;
+}
+
+.formInp{
+    float:right;
+}
+
+.formDiv{
+    width: 100%;
+    margin-bottom: 2rem;
+}
+
 #itemsOrdCheckout{
 
   background-image: linear-gradient(to top right, yellow, red);
@@ -151,6 +195,10 @@ body{
     width: 90%;
     height: 14vh;
 
+}
+
+.formInp{
+    float: right;
 }
 
 .orderItem{

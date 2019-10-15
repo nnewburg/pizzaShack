@@ -30,6 +30,7 @@ app.use(cookieSession({
 // Seperated Routes for each Order
 const orderRoutes = require("./routes/orders");
 const itemRoutes = require("./routes/items");
+const allOrderRoutes = require("./routes/allOrders")
 
 // Mount all order routes
 app.use("/api/orders", orderRoutes(knex));
@@ -37,42 +38,55 @@ app.use("/api/orders", orderRoutes(knex));
 // Mount all order routes
 app.use("/api/items", itemRoutes(knex));
 
-app.post("/confirmOrder", (req, res) => {
-  console.log(req.body.totCost)
-  knex("orders").where({user_id: req.session.user.id, currentOrder: true}).update({totalCost: req.body.totCost, currentOrder: false, orderCompleted:true}).then(result =>{
-    // twilioClient.messages.create({
-    //   to: '+17783844459',
-    //   from: '+12563673421',
-    //   body: 'Your order has been placed'
-    // }).then(result => {
-    res.redirect("/")
-    // })
-  })
-})
+app.use("/api/allOrders", allOrderRoutes(knex));
+
 
 app.get("/", (req, res) => {
   console.log(req.session.user)
+  if(req.session.user.admin == true){
+     res.redirect("/admin")
+  }
   let templateVars = {user: req.session.user};
   return res.render("index", templateVars);
 })
 
 app.get("/login", (req, res) => {
+   if(req.session.user.admin == true){
+     res.redirect("/admin")
+  }
   let templateVars = {user: req.session.user};
   res.render("login", templateVars)
 })
 
 app.get("/checkOut", (req, res) => {
+   if(req.session.user.admin == true){
+     res.redirect("/admin")
+  }
   let templateVars = {user: req.session.user};
   res.render("checkOut", templateVars)
 })
 
-app.post("/", (req, res) => {
+app.get("/admin", (req, res) => {
+  let templateVars = {user: req.session.user}
+  res.render("admin", templateVars)
+})
+
+app.post("/login", (req, res) => {
+  if(req.body.adminPword == "PizzaShack"){
+    knex("users").insert({email: req.body.email, password: req.body.password, name: req.body.name, admin:true}).then(result => {
+    knex("users").where({email: req.body.email}).then(result => {
+    req.session.user = result[0]
+    res.redirect("/admin")
+   })
+  })
+  } else{
   knex("users").insert({email: req.body.email, password: req.body.password, name: req.body.name}).then(result => {
      knex("users").where({email: req.body.email}).then(result => {
       req.session.user = result[0]
       res.redirect("/")
    })
   })
+  }
 })
 
 app.post("/logout", (req, res) => {
@@ -127,6 +141,19 @@ app.post("/removeItem", (req, res) => {
     })
       res.redirect("/")
     })
+
+app.post("/confirmOrder", (req, res) => {
+  console.log(req.body.totCost)
+  knex("orders").where({user_id: req.session.user.id, currentOrder: true}).update({totalCost: req.body.totCost, currentOrder: false, orderCompleted:true}).then(result =>{
+    // twilioClient.messages.create({
+    //   to: '+17783844459',
+    //   from: '+12563673421',
+    //   body: 'Your order has been placed'
+    // }).then(result => {
+    res.redirect("/")
+    // })
+  })
+})
 
 
 app.listen(PORT, () => {
