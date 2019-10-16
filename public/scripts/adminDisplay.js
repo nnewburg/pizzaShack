@@ -7,90 +7,72 @@
            method: "GET",
             url: "/api/items"
         }).done ((items) => {
-    console.log("check" + resources[0].itemsOrdered)
 
-    resources.forEach(function(order){
+resources.forEach(function(order){
 
-    let data = order.itemsOrdered
-    let crop = data.split(",")
-    let quantityObj = {}
 
-    crop.forEach(function(ele) {
-        if(quantityObj.hasOwnProperty(ele)){
-          quantityObj[ele] += 1
-        }else {
-          quantityObj[ele] = 1
-        }
+          let data = order.itemsOrdered
+          let crop = data.split(",")
+          let quantityObj = {}
+          let words = ""
+
+          crop.forEach(function(ele) {
+              if(quantityObj.hasOwnProperty(ele)){
+                quantityObj[ele] += 1
+              }else {
+                quantityObj[ele] = 1
+              }
+          })
+
+      for(let prop in quantityObj){
+
+
+       words += prop + " x " + quantityObj[prop] + ", "
+
+      }
+
+      renderOrders(displayOrder(order.Date, order.Phone, words, order.totalCost ));
     })
 
-    let totalCost = 0
-
-    for(let prop in quantityObj){
-      if(Object.prototype.hasOwnProperty.call(quantityObj, prop)){
-        let price = 0;
-        for(let i = 0; i < items.length; i++) {
-            if(items[i].description == prop ){
-              console.log("if works")
-              price = items[i].price
-              console.log(price)
-            }
-        }
-
-        totalCost += (price * quantityObj[prop])
-
-        renderOrders(displayOrder(prop, price, quantityObj[prop]));
-      }
-    }
-
-   totalItemsCost(totalCost)
-
-   // console.log("Daj")
-
-   // let nard = $("<p></p>")
-   // $(nard).text("Yuck")
-   // $(nard).appendTo($('#adminMain'))
-
-})
     })
   })
 });
-
- function totalItemsCost(arg){
-  let totalCostEle = $("<p></p>")
-  $('#jim').val(arg)
-  $(totalCostEle).text("Total: $" + arg)
-  $(totalCostEle).css("float", "right")
-  $(totalCostEle).css("marginRight", "4rem")
-  $(totalCostEle).appendTo($('#adminMain'));
- }
-
 
  function renderOrders(data) {
     data.appendTo($('#adminMain'));
   }
 
-  function displayOrder(resource,cost,quantity){
+  function displayOrder(ordDate, phone, resource, total){
 
   if(resource.length > 0){
-    let dummy = $("<div></div>");
-    $(dummy).addClass("orderDiv")
+    let orderDiv = $("<div></div>");
+    $(orderDiv).addClass("adminOrdDiv")
+    let date = $("<p></p>")
+    $(date).text(ordDate)
+    $(date).addClass("adminItems")
+    let tele = $("<p></p>")
+    $(tele).text(addDashes(phone))
+    $(tele).addClass("adminItems")
     let name = $("<p></p>")
-    $(name).addClass("orderItem");
+    $(name).addClass("adminItems")
     $(name).text(resource+ "  ")
-    let price = $("<p></p>")
-
-    let quantity1 = $("<p></p>");
-    $(quantity1).text(" x " + quantity)
-    $(quantity1).addClass("orderItem");
-    let itemTotal = $("<p></p>");
-    $(itemTotal).addClass("orderItemCost");
-    $(itemTotal).text("$" + cost*quantity);
-    $(dummy).append(name)
-    $(dummy).append(quantity1)
+    let itemTotal = $("<span></span>");
+    $(itemTotal).addClass("adminItems")
+    $(itemTotal).text("Total: $" + total);
+    $(orderDiv).append(date)
+    $(orderDiv).append(tele)
+    $(orderDiv).append(name)
+    $(orderDiv).append(itemTotal)
 
 
-    $(dummy).append(itemTotal)
 
-    return dummy
+    return orderDiv
   }
   };
+
+function addDashes(f)
+{
+   let f_val = f.replace(/\D[^\.]/g, "");
+   return done = f_val.slice(0,3)+"-"+f_val.slice(3,6)+"-"+f_val.slice(6);
+
+}

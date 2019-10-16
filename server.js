@@ -80,7 +80,7 @@ app.post("/login", (req, res) => {
    })
   })
   } else{
-  knex("users").insert({email: req.body.email, password: req.body.password, name: req.body.name}).then(result => {
+  knex("users").insert({email: req.body.email, password: req.body.password, name: req.body.name, phone: req.body.phone}).then(result => {
      knex("users").where({email: req.body.email}).then(result => {
       req.session.user = result[0]
       res.redirect("/")
@@ -143,8 +143,10 @@ app.post("/removeItem", (req, res) => {
     })
 
 app.post("/confirmOrder", (req, res) => {
-  console.log(req.body.totCost)
-  knex("orders").where({user_id: req.session.user.id, currentOrder: true}).update({totalCost: req.body.totCost, currentOrder: false, orderCompleted:true}).then(result =>{
+  console.log("I like kitties" + req.session.user.Phone)
+  let today = new Date();
+  let date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
+  knex("orders").where({user_id: req.session.user.id, currentOrder: true}).update({Phone: req.session.user.phone, totalCost: req.body.totCost, currentOrder: false, orderCompleted:true, Date: date }).then(result =>{
     // twilioClient.messages.create({
     //   to: '+17783844459',
     //   from: '+12563673421',

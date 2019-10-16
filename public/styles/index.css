@@ -85,7 +85,7 @@ body{
   justify-content: space-around;
   border: 2px black solid;
   margin: 10%;
-  width: 60%;
+  width: 75%;
   background-color: #f6f6f6;
   box-shadow: 5px 10px 8px 10px #888888;
   font-family: 'Mansalva', cursive;
@@ -211,7 +211,12 @@ body{
     float: right;
 }
 
+/
 
+.adminItems{
+    display: inline-block;
+
+}
 
 #orderItemsContainer{
         width: 80%;
@@ -226,4 +231,13 @@ body{
 
 .itemPrice{
     margin-bottom: 0px;
+}
+
+.adminOrdDiv{
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    margin-left: 1rem;
+    margin-right: 1rem;
 }

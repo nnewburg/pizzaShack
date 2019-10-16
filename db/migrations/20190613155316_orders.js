@@ -7,6 +7,8 @@ exports.up = function(knex, Promise) {
       table.boolean('currentOrder');
       table.boolean('orderCompleted');
       table.integer('totalCost');
+      table.string('Date');
+      table.string('Phone')
       table.integer('user_id').unsigned().notNullable();
       table.foreign('user_id').references('id').inTable('users');
     })
