@@ -24,11 +24,17 @@ resources.forEach(function(order){
               }
           })
 
+      let count = 0
       for(let prop in quantityObj){
 
+       if(count !== 0){
+        words += ", " + prop + " x " + quantityObj[prop]
+       }
+       else {
+        words += prop + " x " + quantityObj[prop]
+       }
 
-       words += prop + " x " + quantityObj[prop] + ", "
-
+       count ++
       }
 
       renderOrders(displayOrder(order.Date, order.Phone, words, order.totalCost ));
@@ -52,12 +58,12 @@ resources.forEach(function(order){
     $(date).addClass("adminItems")
     let tele = $("<p></p>")
     $(tele).text(addDashes(phone))
-    $(tele).addClass("adminItems")
+    $(tele).addClass("adminTel")
     let name = $("<p></p>")
-    $(name).addClass("adminItems")
+    $(name).addClass("adminDesc")
     $(name).text(resource+ "  ")
-    let itemTotal = $("<span></span>");
-    $(itemTotal).addClass("adminItems")
+    let itemTotal = $("<p></p>");
+    $(itemTotal).addClass("adminCost")
     $(itemTotal).text("Total: $" + total);
     $(orderDiv).append(date)
     $(orderDiv).append(tele)

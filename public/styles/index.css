@@ -40,7 +40,7 @@ body{
     margin: 0 auto;
     padding: 0;
     width: 100%;
-    height: 10vh;
+    height: 5vh;
     background-color: gray;
     bottom: 0;
     z-index: 999;
@@ -89,7 +89,7 @@ body{
   background-color: #f6f6f6;
   box-shadow: 5px 10px 8px 10px #888888;
   font-family: 'Mansalva', cursive;
-  font-size: 20px;
+  font-size: 15px;
 }
 
 #loginContainer{
@@ -215,11 +215,24 @@ body{
 
 .adminItems{
     display: inline-block;
+}
 
+.adminTel{
+  margin-left: 2rem;
+}
+
+.adminDesc{
+  position: absolute;
+  left: 40%;
+}
+
+.adminCost{
+  position: absolute;
+  right: 0;
 }
 
 #orderItemsContainer{
-        width: 80%;
+    width: 80%;
     margin-left: 10%;
 }
 
@@ -236,7 +249,7 @@ body{
 .adminOrdDiv{
     position: relative;
     display: flex;
-    justify-content: space-between;
+    /*justify-content: space-between;*/
     width: 100%;
     margin-left: 1rem;
     margin-right: 1rem;

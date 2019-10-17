@@ -42,10 +42,10 @@ app.use("/api/allOrders", allOrderRoutes(knex));
 
 
 app.get("/", (req, res) => {
-  console.log(req.session.user)
   if(req.session.user.admin == true){
      res.redirect("/admin")
   }
+
   let templateVars = {user: req.session.user};
   return res.render("index", templateVars);
 })
@@ -54,6 +54,7 @@ app.get("/login", (req, res) => {
    if(req.session.user.admin == true){
      res.redirect("/admin")
   }
+
   let templateVars = {user: req.session.user};
   res.render("login", templateVars)
 })
@@ -61,7 +62,8 @@ app.get("/login", (req, res) => {
 app.get("/checkOut", (req, res) => {
    if(req.session.user.admin == true){
      res.redirect("/admin")
-  }
+   }
+
   let templateVars = {user: req.session.user};
   res.render("checkOut", templateVars)
 })
@@ -71,21 +73,30 @@ app.get("/admin", (req, res) => {
   res.render("admin", templateVars)
 })
 
+
 app.post("/login", (req, res) => {
+
+  if(req.body.email === "" || req.body.password === "" || req.body.name === "" || req.body.phone === ""){
+    return res.status(400).send("<h1>Status Code: 403<h1> Cannot register with an empty email or password</h1>");
+  }
+
+  let cryptedPword = bcrypt.hashSync(req.body.password, 10)
+
   if(req.body.adminPword == "PizzaShack"){
-    knex("users").insert({email: req.body.email, password: req.body.password, name: req.body.name, admin:true}).then(result => {
+    knex("users").insert({email: req.body.email, password: cryptedPword, name: req.body.name, admin:true}).then(result => {
     knex("users").where({email: req.body.email}).then(result => {
     req.session.user = result[0]
     res.redirect("/admin")
    })
   })
-  } else{
-  knex("users").insert({email: req.body.email, password: req.body.password, name: req.body.name, phone: req.body.phone}).then(result => {
+  }
+  else{
+    knex("users").insert({email: req.body.email, password: cryptedPword, name: req.body.name, phone: req.body.phone}).then(result => {
      knex("users").where({email: req.body.email}).then(result => {
       req.session.user = result[0]
       res.redirect("/")
-   })
-  })
+     })
+    })
   }
 })
 
@@ -97,38 +108,32 @@ app.post("/logout", (req, res) => {
 })
 
 app.post("/addItem", (req, res) => {
-console.log(req.body.id)
-
   knex("orders").where({user_id: req.session.user.id, currentOrder: true}).then(result =>{
-    console.log(!result[0]);
-
     if(!result[0]){
-      console.log("add Order route gucci")
       knex("orders").insert({user_id: req.session.user.id, currentOrder: true, orderCompleted: false}).then(result => {
         knex("orders").where({currentOrder:true}).update({itemsOrdered:req.body.id}).then(result => {
           res.redirect("/")
         })
       })
-    } else {
-      console.log("rutherford")
+    }
+    else {
       knex.select('itemsOrdered').from("orders").where({currentOrder: true}).then(result => {
         if(result[0].itemsOrdered){
-        knex("orders").where({currentOrder:true}).update({itemsOrdered:result[0].itemsOrdered + ',' + req.body.id}).then(result => {
-          res.redirect("/")
+          knex("orders").where({currentOrder:true}).update({itemsOrdered:result[0].itemsOrdered + ',' + req.body.id}).then(result => {
+            res.redirect("/")
           })
-        }else
-        knex("orders").where({currentOrder:true}).update({itemsOrdered:req.body.id}).then(result => {
-          res.redirect("/")
-        })
+        }
+        else{
+          knex("orders").where({currentOrder:true}).update({itemsOrdered:req.body.id}).then(result => {
+            res.redirect("/")
+          })
+        }
       })
       }
-
-
   })
 })
 
 app.post("/removeItem", (req, res) => {
-
    knex("orders").where({user_id: req.session.user.id, currentOrder: true}).then(result => {
       let parse = req.body.id.slice(6, req.body.id.length)
       knex("orders").where({user_id: req.session.user.id, currentOrder: true}).then(result => {
@@ -140,19 +145,19 @@ app.post("/removeItem", (req, res) => {
     })
     })
       res.redirect("/")
-    })
+})
 
 app.post("/confirmOrder", (req, res) => {
-  console.log("I like kitties" + req.session.user.Phone)
+
   let today = new Date();
   let date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
   knex("orders").where({user_id: req.session.user.id, currentOrder: true}).update({Phone: req.session.user.phone, totalCost: req.body.totCost, currentOrder: false, orderCompleted:true, Date: date }).then(result =>{
     // twilioClient.messages.create({
-    //   to: '+17783844459',
+    //   to: '+1' + req.session.user.phone,
     //   from: '+12563673421',
-    //   body: 'Your order has been placed'
+    //   body: 'Your order from PizzaShack has been placed'
     // }).then(result => {
-    res.redirect("/")
+      res.redirect("/")
     // })
   })
 })
