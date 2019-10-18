@@ -23,29 +23,77 @@ $.ajax({
         }).done ((items) => {
 
 
-    let placeHolder = e.target.id
-    let res = placeHolder.replace("Cart", "");
-    let price = 0;
+                  let placeHolder = e.target.id
+                  let res = placeHolder.replace("Cart", "");
+                  let price = 0;
 
-    for(product of items){
-        if(res == product.description){
-          price = product.price;
-        }
-    }
+                  for(product of items){
+                      if(res == product.description){
+                        price = product.price;
+                      }
+                  }
 
     let quantity = $(`#${res}Cart`).val()
 
     if(quantity > e.currentTarget.alt){
+
+      let str = e.currentTarget.id
       incrementTotalCost(price)
       $(`#${res}Cart`).attr("alt", quantity)
-    } else {
-      decrementTotalCost(price)
-      $(`#${res}Cart`).attr("alt", quantity)
-    }
 
-    $(`#${res}Price`).text(`Cost: $ ${price * quantity}`)
+
+
+        $.ajax({
+        type: "POST",
+        url: "/addItem",
+        data: {
+            id: str.replace("Cart", ""), // < note use of 'this' here
+            access_token: $("#access_token").val()
+        },
+        success: function(result) {
+                $.ajax({
+                     method: "GET",
+                     url: "/api/orders"
+                }).done((resources) => {
+                  $(`#${res}Price`).text(`Cost: $ ${price * quantity}`)
+                })
+        }
+        })
+        }else {
+
+          let str = e.currentTarget.id
+          decrementTotalCost(price)
+          $(`#${res}Cart`).attr("alt", quantity)
+
+
+        $.ajax({
+        type: "POST",
+        url: "/decrementItem",
+        data: {
+            id: str.replace("Cart", ""), // < note use of 'this' here
+            access_token: $("#access_token").val()
+        },
+        success: function(result) {
+                $.ajax({
+                     method: "GET",
+                     url: "/api/orders"
+                }).done((resources) => {
+                  $(`#${res}Price`).text(`Cost: $ ${price * quantity}`)
+                })
+        }
+        })
+
+        }
+
+
 
    })
+
+
+
+
+
+
   })
 });
 

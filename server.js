@@ -108,6 +108,7 @@ app.post("/logout", (req, res) => {
 })
 
 app.post("/addItem", (req, res) => {
+  console.log("chirp" + req.body.id)
   knex("orders").where({user_id: req.session.user.id, currentOrder: true}).then(result =>{
     if(!result[0]){
       knex("orders").insert({user_id: req.session.user.id, currentOrder: true, orderCompleted: false}).then(result => {
@@ -131,6 +132,15 @@ app.post("/addItem", (req, res) => {
       })
       }
   })
+})
+
+app.post("/decrementItem", (req,res) => {
+  let str = req.body.id + ","
+    knex("orders").where({user_id: req.session.user.id, currentOrder: true}).then(result =>{
+      knex("orders").where({currentOrder:true}).update({itemsOrdered:result[0].itemsOrdered.replace(str, "")}).then(result => {
+        res.redirect("/")
+      })
+    })
 })
 
 app.post("/removeItem", (req, res) => {
