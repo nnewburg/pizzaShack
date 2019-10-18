@@ -5,11 +5,8 @@ PizzaShack is a full stack web application buillt with Node and Express that all
 ## Final Product
 This is a project using Express.js. Using PostGres on the back end it stores users, orders, and items in the database for persistent state even if the server goes down. HTML and CSS are used in conjunction with EJS for the front end design. Passwords are encrypted with Bcrypt.
 
-!["Screenshot of URLs page"](https://github.com/nnewburg/expressTutorial/blob/master/docs/tinyApp1.png?raw=true)
---------------------------------------------------------
--
---------------------------------------------------------
-!["Screenshot of URLs page"](https://github.com/nnewburg/expressTutorial/blob/master/docs/tinyApp2.png?raw=true)
+!["Screenshot of Ordering"](https://github.com/nnewburg/expressTutorial/blob/master/docs/tinyApp1.png?raw=true)
+
 
 ## Dependencies
 - Node.js
