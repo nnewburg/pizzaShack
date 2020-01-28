@@ -42,21 +42,34 @@ app.use("/api/allOrders", allOrderRoutes(knex));
 
 
 app.get("/", (req, res) => {
-  if(req.session.user.admin == true){
-     res.redirect("/admin")
-  }
+
+if(req.session.user){
+
+  if (req.session.user.admin){
+    res.redirect("/admin")
+ }
+}
+  // if(req.session.user){
+  //    res.redirect("/admin")
+  // }
 
   let templateVars = {user: req.session.user};
-  return res.render("index", templateVars);
+  if(req.session.user){
+    return res.render("index", templateVars);
+  } else {
+     return res.render("index", templateVars)
+  }
 })
 
 app.get("/login", (req, res) => {
-   if(req.session.user.admin == true){
-     res.redirect("/admin")
+   if(req.session.user){
+    if ("admin" in req.session.user){
+      res.redirect("/admin")
+    }
   }
 
-  let templateVars = {user: req.session.user};
-  res.render("login", templateVars)
+  // let templateVars = {user: req.session.user};
+  res.render("login")
 })
 
 app.get("/checkOut", (req, res) => {
@@ -76,9 +89,9 @@ app.get("/admin", (req, res) => {
 
 app.post("/login", (req, res) => {
 
-  if(req.body.email === "" || req.body.password === "" || req.body.name === "" || req.body.phone === ""){
-    return res.status(400).send("<h1>Status Code: 403<h1> Cannot register with an empty email or password</h1>");
-  }
+  // if(req.body.email === "" || req.body.password === "" || req.body.name === "" || req.body.phone === ""){
+  //   return res.status(400).send("<h1>Status Code: 403<h1> Cannot register with an empty email or password</h1>");
+  // }
 
   let cryptedPword = bcrypt.hashSync(req.body.password, 10)
 
@@ -86,14 +99,16 @@ app.post("/login", (req, res) => {
     knex("users").insert({email: req.body.email, password: cryptedPword, name: req.body.name, admin:true}).then(result => {
     knex("users").where({email: req.body.email}).then(result => {
     req.session.user = result[0]
+
     res.redirect("/admin")
    })
   })
   }
   else{
-    knex("users").insert({email: req.body.email, password: cryptedPword, name: req.body.name, phone: req.body.phone}).then(result => {
+    knex("users").insert({email: req.body.email, password: cryptedPword, name: req.body.name, phone: req.body.phone, admin:false}).then(result => {
      knex("users").where({email: req.body.email}).then(result => {
       req.session.user = result[0]
+
       res.redirect("/")
      })
     })
@@ -102,13 +117,14 @@ app.post("/login", (req, res) => {
 
 app.post("/logout", (req, res) => {
   knex("orders").where({user_id: req.session.user.id, currentOrder: true}).update({currentOrder: false}).then(result =>{
-    req.session.user = ""
+    req.session.user = null
+    console.log(req.session.user)
     res.redirect("/")
   })
 })
 
 app.post("/addItem", (req, res) => {
-  console.log("chirp" + req.body.id)
+  console.log("added ---" + req.body.id)
   knex("orders").where({user_id: req.session.user.id, currentOrder: true}).then(result =>{
     if(!result[0]){
       knex("orders").insert({user_id: req.session.user.id, currentOrder: true, orderCompleted: false}).then(result => {
@@ -135,6 +151,7 @@ app.post("/addItem", (req, res) => {
 })
 
 app.post("/decrementItem", (req,res) => {
+console.log("removed ---" + req.body.id)
   let str = req.body.id + ","
     knex("orders").where({user_id: req.session.user.id, currentOrder: true}).then(result =>{
       knex("orders").where({currentOrder:true}).update({itemsOrdered:result[0].itemsOrdered.replace(str, "")}).then(result => {

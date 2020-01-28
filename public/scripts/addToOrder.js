@@ -21,9 +21,7 @@ $(document).on("click", '.addItem', function (e) {
        method: "GET",
         url: "/api/items"
     }).done ((items) => {
-    console.log("shoal")
 
-    console.log(items)
 
     let price = 0;
     let data = resources[0].itemsOrdered
@@ -32,7 +30,6 @@ $(document).on("click", '.addItem', function (e) {
     let flagLoop = true;
 
     for(let i = 0; i < items.length; i++) {
-        console.log("loop works")
         if(items[i].description == crop[crop.length-1]){
            price = items[i].price
         }
@@ -54,7 +51,7 @@ $(document).on("click", '.addItem', function (e) {
     if(flagAdd){
 
       renderOrders(createOrder(crop[crop.length-1],1, price,price))
-      console.log("NAN check" + price)
+
       //incrementTotalCost(price)
   }
   })
@@ -74,6 +71,7 @@ $(document).on("click", '.addItem', function (e) {
 })
 
  function addItem(resource,price){
+    console.log("value attribute increments")
     let value = parseInt($(`#${resource}Cart`).val())
     $(`#${resource}Cart`).val(parseInt(value+1))
     let amount = value + 1
@@ -93,7 +91,8 @@ function createOrder(resource,amount,price,data){
       type: "number",
       min: "1",
       max: "10",
-      value: amount
+      value: amount,
+      alt: 1
     })
     $(quantity).attr("mog", "amount")
     let numOfPrice = $("<p></p>")
@@ -108,7 +107,7 @@ function createOrder(resource,amount,price,data){
     let test = $('#totalCost').text()
     let result = parseInt(test.replace(/\D/g, ''));
 
-    console.log("Sara" + result)
+
 
     if(result){
         $('#totalCost').text(`Total Cost: $ ${result+data}`)
@@ -128,6 +127,6 @@ function incrementTotalCost (data){
     let test = $('#totalCost').text()
     let result = parseInt(test.replace(/\D/g, ''));
 
-    console.log("Sara" + result)
+
     $('#totalCost').text(`Total Cost: $ ${result+data}`)
 }
